@@ -1,0 +1,88 @@
+YEAR
+MONTH
+DAY
+DAY_OF_WEEK
+AIRLINE
+FLIGHT_NUMBER
+TAIL_NUMBER
+ORIGIN_AIRPORT
+DESTINATION_AIRPORT
+SCHEDULED DEPARTURE
+DEPARTURE TIME
+DEPARTURE DELAY
+TAXI OUT
+WHEELS OFF
+SCHEDULED TIME
+ELAPSED TIME
+AIR TIME
+DISTANCE
+WHEELS ON
+TAXI ON
+SCHEDULED ARRIVAL
+ARRIVAL TIME
+ARRIVAL DELAY
+DIVERTED
+CANCELLED
+CANCELLATION REASON
+AIR SYSTEM DELAY
+SECURITY DELAY
+AIRLINE DELAY
+LATE AIRCRAFT DELAY
+WEATHER DELAY
+
+meta data & relationship
+posted in 2015 Flight Delays and Cancellations 14 hours ago
+Data Format
+
+The following times are in the xx:yy - hour:minute format (e.g. 1536 means 3:36pm, 345 means 3:45am, 16 means 00:16am)
+
+    scheduled_departure
+    departure_time
+    scheduled_arrival
+    arrival_time
+    wheels_off
+    wheels_on
+
+The following times are in minutes format (negatives mean actual_time is ahead of scheduled_time for the absolute value of that negative number)
+
+    arrival_delay
+    departure_delay
+    taxi_in
+    taxi_out
+    scheduled_time
+    elapsed_time
+    air_time
+
+Distance in miles
+Data Definition
+
+    WHEELS_OFF Time - The time point that the aircraft's wheels leave the ground.
+    WHEELS_ON Time - The time point that the aircraft's wheels touch on the ground.
+    TAXI_OUT Time - The time duration elapsed between departure from the origin airport gate and wheels off.
+    TAXI_IN Time - The time duration elapsed between wheels-on and gate arrival at the destination airport.
+    AIR_TIME - The time duration between wheels_off and wheels_on time.
+
+Data Relationship
+
+    arrival_time = wheels_on + taxi_in
+    arrival_delay = arrival_time - scheduled_arrival
+    departure_time = wheels_off - taxi_out
+    departure_delay = departure_time - scheduled_departure
+    elapsed_time =air_time + taxi_in + taxi_out
+    air_time = wheels_on - wheels_off
+
+Note:
+
+In the flights file, there are around 480k flights with original_airport & destination_airport being a 5-digit number ('14168')
+instead of three-character code ('LAX'). 
+Not sure why it's the case.. just be cautious when joining flights and airports data or analyzing based on airport info..
+
+
+    'Distance' indicates the distance between airports in miles.
+    'CANCELLATION_REASON' indicates with a letter the reason for the cancellation of the flight.
+     A - Carrier; B - Weather; C - National Air System; D - Security
+        ...
+
+Delays and Taxi Times are in minutes.
+
+https://www.transtats.bts.gov/Fields.asp?Table_ID=236
